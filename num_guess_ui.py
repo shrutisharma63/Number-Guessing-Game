@@ -7,13 +7,15 @@ max_number = 100
 attempts = 0
 max_attempts = 3
 score = 100
+last_level = 2
+replay_button = None
 
 #Function to start new game
-
 def start_game(level):
-    global number_to_guess,max_number,attempts,score
+    global number_to_guess,max_number,attempts,score,last_level,replay_button
     attempts = 0
     score = 100
+    last_level = level
     
     if level == 1:
         max_number = 50
@@ -27,7 +29,11 @@ def start_game(level):
     number_to_guess = random.randint(1,max_number)
     result_label.config(text=f"Guess a number between 1 and {max_number}")
     entry.delete(0,tk.END)
-
+    #Replay Button
+    if replay_button is not None:
+       replay_button.pack_forget() 
+       replay_button = None
+    
 #Function to check guess
 def check_guess():
     global attempts , score
@@ -48,6 +54,7 @@ def check_guess():
             
         if attempts == max_attempts and guess != number_to_guess:
             result_label.config(text=f"Game over! Number was {number_to_guess}")
+            show_replay_button()
     except ValueError:
         result_label.config(text="Please enter a valid number!")
         
@@ -72,6 +79,13 @@ entry.pack(pady=10)
 
 #Guess button
 tk.Button(root, text="Guess",command=check_guess, bg="skyblue", font=("Arial", 12, "bold")).pack()
+
+#Function to show replay button
+def show_replay_button():
+    global replay_button
+    if replay_button is None:
+        replay_button = tk.Button(root, text="Replay", command=lambda: start_game(last_level),bg="lightpink", font=("Arial",12,"bold"))
+        replay_button.pack(pady=5)
 
 #Result label
 result_label = tk.Label(root, text="",font=("Arial", 12), bg="#f0f0f0")

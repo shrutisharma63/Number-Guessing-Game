@@ -14,6 +14,8 @@ This project demonstrates how to move from a command-line game to a polished GUI
 - Maximum of 3 attempts per game.
 - Interactive Tkinter UI with buttons, input field, and feedback labels.
 - Styled interface with colors, fonts, and layout improvements.
+- Add Timer Functionality
+- Check High Score
 
 ---
 
